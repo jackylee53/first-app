@@ -1,0 +1,12 @@
+2017-12-13 00:31:50,717 - root - [CRITICAL] configuration.py[line:49] - STREAM_LOG_LEVEL setting is not correct! setting is not correct!
+2017-12-13 00:33:10,014 - root - [CRITICAL] configuration.py[line:44] - STREAM_LOG_LEVEL setting is not correct!
+2017-12-13 00:33:49,978 - root - [CRITICAL] configuration.py[line:44] - STREAM_LOG_LEVEL setting is not correct!
+2017-12-13 00:34:06,035 - root - [CRITICAL] configuration.py[line:44] - GLOBAL_LOG_LEVEL setting is not correct!
+2017-12-13 00:34:18,701 - root - [CRITICAL] configuration.py[line:44] - GLOBAL_LOG_LEVEL setting is not correct!
+2017-12-13 00:35:13,486 - root - [CRITICAL] configuration.py[line:44] - GLOBAL_LOG_LEVEL setting is not correct!
+2017-12-13 00:35:32,219 - root - [CRITICAL] configuration.py[line:44] - GLOBAL_LOG_LEVEL setting is not correct!
+2017-12-13 00:35:58,967 - root - [CRITICAL] configuration.py[line:44] - GLOBAL_LOG_LEVEL setting is not correct!
+2017-12-13 00:36:06,592 - root - [CRITICAL] configuration.py[line:44] - GLOBAL_LOG_LEVEL setting is not correct!
+2017-12-13 00:36:06,592 - root - [CRITICAL] logger.py[line:71] - System crash:exit expected at most 1 arguments, got 2!
+2017-12-13 00:36:16,676 - root - [CRITICAL] configuration.py[line:44] - GLOBAL_LOG_LEVEL setting is not correct!
+2017-12-13 00:36:38,569 - root - [CRITICAL] configuration.py[line:44] - STREAM_LOG_LEVEL setting is not correct!

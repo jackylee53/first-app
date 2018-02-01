@@ -1,0 +1,49 @@
+# Example YAML to get you started quickly.
+# Be aware that YAML has indentation based scoping.
+# Code completion support is available so start typing for available options.
+swagger: '2.0'
+
+# This is your document metadata
+info:
+  version: "0.0.1"
+  title: flaskr_test
+
+host: flaskr.example.com:8000
+basePath: /v1
+schemes:
+ - http
+ - https
+
+# Describe your paths here
+paths:
+  # This is a path endpoint. Change it.
+  /users:
+    # This is a HTTP operation
+    get:
+      operationId: getusers
+      summary: get users
+      # Describe this verb here. Note: you can use markdown
+      
+      description: |
+        Gets `Person` objects.
+        Optional query param of **size** determines
+        size of returned array
+        # Expected responses for this operation:
+      produces:
+       - application/json
+      responses:
+        # Response code
+        200:
+          description: Successful response
+    post:
+      operationId: addusers
+      summary: add users
+      produces:
+       - application/json
+      responses:
+       200:
+         description: add sucessful
+       
+       
+       
+        

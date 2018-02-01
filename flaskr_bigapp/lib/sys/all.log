@@ -1,0 +1,5 @@
+2017-12-05 21:09:43,328 - DEBUG - debug message
+2017-12-05 21:09:43,328 - INFO - info message
+2017-12-05 21:09:43,328 - WARNING - warning message
+2017-12-05 21:09:43,328 - ERROR - error message
+2017-12-05 21:09:43,328 - CRITICAL - critical message

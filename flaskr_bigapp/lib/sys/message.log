@@ -1,0 +1,15 @@
+2017-12-05 21:20:46,513 - DEBUG - debug message
+2017-12-05 21:20:46,513 - INFO - info message
+2017-12-05 21:20:46,513 - WARNING - warning message
+2017-12-05 21:20:46,513 - ERROR - error message
+2017-12-05 21:20:46,513 - CRITICAL - critical message
+2017-12-05 21:38:09,436 - DEBUG - fuck
+2017-12-05 21:39:03,082 - haha - [DEBUG] - fuck
+2017-12-05 21:39:46,182 - haha - [DEBUG] - fuck
+2017-12-05 21:39:46,182 - sdfdsf - [ERROR] - sdfasfdsf
+2017-12-05 21:46:05,558 - haha - [DEBUG] - fuck
+2017-12-05 21:46:05,559 - sdfaf - [ERROR] - sdfasfdsf
+2017-12-05 21:47:26,574 - haha - [DEBUG] - fuck
+2017-12-05 21:47:26,574 - sdfaf - [ERROR] - sdfasfdsf
+2017-12-05 21:49:25,750 - haha - [DEBUG] - fuck
+2017-12-05 21:49:25,751 - sdfaf - [ERROR] - sdfasfdsf

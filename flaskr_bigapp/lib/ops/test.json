@@ -1,0 +1,79 @@
+{
+    "extra_vars": {
+        "hostlists": "127.0.0.12"
+    },
+    "forks": 20,
+    "playbooks": [
+        "/root/auto-configure-change/auto-create-repo/auto-create-repo.yml"
+    ],
+    "project_name": "ansible",
+    "ssh_user": "root",
+    "tags": [
+        "fuck"
+    ]
+}{
+    "extra_vars": {
+        "hostlists": "127.0.0.12"
+    },
+    "forks": 20,
+    "playbooks": [
+        "/root/auto-configure-change/auto-create-repo/auto-create-repo.yml"
+    ],
+    "project_name": "ansible",
+    "ssh_user": "root",
+    "tags": [
+        "fuck"
+    ]
+}{
+    "extra_vars": {
+        "hostlists": "127.0.0.12"
+    },
+    "forks": 20,
+    "playbooks": [
+        "/root/auto-configure-change/auto-create-repo/auto-create-repo.yml"
+    ],
+    "project_name": "ansible",
+    "ssh_user": "root",
+    "tags": [
+        "fuck"
+    ]
+}{
+    "extra_vars": {
+        "hostlists": "127.0.0.12"
+    },
+    "forks": 20,
+    "playbooks": [
+        "/root/auto-configure-change/auto-create-repo/auto-create-repo.yml"
+    ],
+    "project_name": "ansible",
+    "ssh_user": "root",
+    "tags": [
+        "fuck"
+    ]
+}{
+    "extra_vars": {
+        "hostlists": "127.0.0.12"
+    },
+    "forks": 20,
+    "playbooks": [
+        "/root/auto-configure-change/auto-create-repo/auto-create-repo.yml"
+    ],
+    "project_name": "ansible",
+    "ssh_user": "root",
+    "tags": [
+        "fuck"
+    ]
+}{
+    "extra_vars": {
+        "hostlists": "127.0.0.12"
+    },
+    "forks": 20,
+    "playbooks": [
+        "/root/auto-configure-change/auto-create-repo/auto-create-repo.yml"
+    ],
+    "project_name": "ansible",
+    "ssh_user": "root",
+    "tags": [
+        "fuck"
+    ]
+}
