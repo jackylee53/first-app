@@ -4,13 +4,12 @@ user_dict = {'henry':{'pass':'henry123'},
              'tom':{'pass':'tom123'},
              'jenry':{'pass':'jenry123'}}
 database_file = 'database.json'
-data={}
 def _output_format(output):
     return """\033[1m%s\033[0m""" %output
 
 def _load_database(filename=database_file):
     """
-
+    读取json文件。该文件存储了用户的购买记录、剩余资金、锁定状态
     :param filename:
     :return:
     """
@@ -23,12 +22,13 @@ def _dump_database(data,filename=database_file,):
         json.dump(data,f)
 
 def _setup():
-     for account in user_dict:
-         data[account] = {}
-         data[account]['history'] = []
-         data[account]['balance'] = 0
-         data[account]['lock_id'] = 0
-     _dump_database(data=data)
+    data = {}
+    for account in user_dict:
+        data[account] = {}
+        data[account]['history'] = []
+        data[account]['balance'] = 0
+        data[account]['lock_status'] = 0
+    _dump_database(data=data)
 
 def _set_shopping_history(account,shopping_record):
     data = _load_database()
@@ -50,12 +50,18 @@ def _get_balance(account):
 
 def _set_lock_user(account,lock_id):
     data = _load_database()
-    data[account]['lock_id'] = lock_id
+    data[account]['lock_status'] = lock_id
     _dump_database(data=data)
 
 def _get_lock_user(account):
-    data = _load_database()[account]['lock_id']
+    data = _load_database()[account]['lock_status']
     return data
+
+def _get_goods():
+    """
+    商品信息的输出格式化
+    :return:
+    """
 
 def _login():
     count = 3
@@ -81,17 +87,12 @@ def _login():
             continue
 
 def _shopping():
-    pass
+    while True:
+        pass
 
 def main():
     #_setup()
     _login()
-    #_set_account()
-    #_set_shopping_history(account='henry',shopping_record='1234')
-    #_set_balance(account='henry',balance=202)
-    #_set_lock_user(account='henry',lock_id=1)
-    #print(_get_shopping_history(account='henry'))
-    #print(_get_balance(account='henry'))
     print(_load_database())
 
 
