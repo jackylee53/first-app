@@ -5,8 +5,7 @@
   <h1>Flaskr</h1>
   <div class=metanav>
   {% if not session.logged_in %}
-      <a href="{{ url_for('login') }}">登录</a>
-      <a href="{{ url_for('register') }}">注册</a>
+      <a href="{{ url_for('login.login_form') }}">登录</a>
   {% else %}
     <a href="{{ url_for('logout') }}">退出</a>
   {% endif %}

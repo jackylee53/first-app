@@ -2,8 +2,8 @@
 #创建一个初始化sqlite3 db文件的python，使用with与contextlib
 from contextlib import closing
 
-from flaskr.modules.db import connect_db
-from flaskr.flaskr import app
+from flaskr import connect_db
+from flaskr import app
 
 
 def init_db():

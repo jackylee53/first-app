@@ -1,13 +1,15 @@
 {% extends "layout.html" %}
 {% block body %}
   {% if error %}<p class=error><strong>错误:</strong> {{ error }}{% endif %}
-  <form action="{{ url_for('login') }}" method=post>
+  <form action="{{ url_for('register') }}" method=post>
     <dl>
       <dt>用户名:
       <dd><input type=text name=username>
       <dt>密码:
       <dd><input type=password name=password>
-      <dd><input type=submit value=登录>
+        <dt>确认密码:
+        <dd><input type=password name=confirm_password>
+      <dd><input type=submit value=提交>
     </dl>
   </form>
 {% endblock %}
