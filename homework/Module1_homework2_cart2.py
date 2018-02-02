@@ -5,7 +5,7 @@ user_dict = {'henry':{'pass':'henry123'},
              'jenry':{'pass':'jenry123'}}
 database_file = 'database.json'
 def _output_format(output):
-    return """\033[1m%s\033[0m""" %output
+    return '\033[1m%s\033[0m' %output
 
 def _load_database(filename=database_file):
     """
@@ -13,15 +13,18 @@ def _load_database(filename=database_file):
     :param filename:
     :return:
     """
-    with open(filename,"r") as f:
+    with open(filename,'r') as f:
         database = json.load(f)
     return database
 
 def _dump_database(data,filename=database_file,):
-    with open(filename,"w") as f:
+    with open(filename,'w') as f:
         json.dump(data,f)
 
 def _setup():
+    """
+    安装函数，主要用于初始化database.json文件。无他用
+    """
     data = {}
     for account in user_dict:
         data[account] = {}
@@ -32,7 +35,10 @@ def _setup():
 
 def _set_shopping_history(account,shopping_record):
     data = _load_database()
-    data[account]['history'] = shopping_record
+    if shopping_record == None:
+        pass
+    else:
+        data[account]['history'].append(shopping_record)
     _dump_database(data=data)
 
 def _get_shopping_history(account):
@@ -57,17 +63,37 @@ def _get_lock_user(account):
     data = _load_database()[account]['lock_status']
     return data
 
-def _get_goods():
+def _get_goods(goods='all'):
     """
     商品信息的输出格式化
     :return:
     """
+    goods_lists = [
+        {'name': "电脑", 'price': 1999},
+        {'name': "鼠标", 'price': 10},
+        {'name': "游艇", 'price': 20},
+        {'name': "美女", 'price': 998},
+    ]
+    if goods == 'all':
+        goods_show = ['%s商品列表%s\n'%('-' * 20,'-' * 20)]
+        for g in goods_lists:
+            goods_show.append('商品名称：%s, 商品价格：%s\n'%(g['name'],g['price']))
+        goods_table = ''.join(goods_show)
+        print(goods_table)
+    # 当goods参数为其他时，返回该商品的编号，名称，和价格
+    else:
+        for g in goods_lists:
+            if goods == g['name']:
+                return g['name']
+            else:
+                print(_output_format(output='您需要的商品，我们没有库存。请重新选择'))
+                break
 
 def _login():
     count = 3
     while count <= 3 and count >= 1:
-        user = input("Please input Username: ").strip()
-        passw = input("Please input Password: ").strip()
+        user = input('请输入您的用户名：').strip()
+        passw = input('请输入您的密码：').strip()
         if (not user or not passw): continue
         count -= 1
         if user in user_dict.keys() and _get_lock_user(account=user) == 1:
@@ -76,23 +102,43 @@ def _login():
             if passw == user_dict[user]['pass']:
                 _set_lock_user(account=user, lock_id=0)
                 print(_output_format(output="欢迎 %s 登录!" %(user)))
-                return 'login'
+                return user
             else:
                 print(_output_format(output='密码错误。您还有%s次机会。'%(count)))
                 if count == 0:
                     _set_lock_user(account=user, lock_id=1)
+                    exit(1)
                 continue
         else:
             print(_output_format(output='用户名错误'))
             continue
 
-def _shopping():
+def _shopping(account):
+    """
+    购物函数。
+    :param account #从_login()导入用户名,用于本函数可以记录用户的购买历史和余额:
+    :return:
+    """
+    #一级循环。用于用户进入购买界面、查询历史记录和退出登录
     while True:
-        pass
+        choose = input('b购买商品、l查看购物记录、q退出：').strip()
+        if choose == 'q':
+            break
+        elif choose == 'l':
+            print(_output_format('，'.join(_get_shopping_history(account=account))))
+            break
+
+        elif choose == 'b':
+            while True:
+                _get_goods()
+                buy_goods = input('请选择你需要购买的商品(q退出)：').strip()
+                _set_shopping_history(account=account,shopping_record=_get_goods(goods=buy_goods))
+            #_set_balance()
 
 def main():
     #_setup()
-    _login()
+    login = _login()
+    _shopping(account=login)
     print(_load_database())
 
 
