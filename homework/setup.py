@@ -1,5 +1,16 @@
-from Module1_homework2_cart import _setup
+import sys
+import Module1_homework2_cart as Cart
+
+
 def main():
-    _setup()
+    argv = sys.argv[1]
+    if argv == 'install':
+        Cart.setup()
+    elif argv == 'run':
+        Cart.main()
+    else:
+        print('您输入的选项不正确')
+
+
 if __name__ == '__main__':
     main()

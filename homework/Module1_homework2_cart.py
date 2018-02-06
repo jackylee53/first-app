@@ -13,7 +13,7 @@ goods_lists = [
 database_file = 'database.json'
 
 
-def _setup():
+def setup():
     """
     安装函数，主要用于初始化database.json文件。无其他用途
     """
