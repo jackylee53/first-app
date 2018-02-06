@@ -8,15 +8,15 @@
     6.）当用户选择查询。可以查看历史的购买记录。
     7.）当用户选择退出。当即退出程序
 
-    
-![](http://www.baidu.com/img/bdlogo.gif)
-    
-    
+### Flowchar
+    程序流程图
+![](https://github.com/henryyuan/first-app/tree/master/homework/Module1_homework2_cart.png)
+
 ### Install
     在使用前需要先安装。安装后会生成database.json文件。用于缓存数据
     python setup.py install
     
-### setup
+### Setup
     启动命令。
     python setup.py run
 
@@ -29,7 +29,7 @@
     - MarkDown工具：pycharm
     - 流程图工具：ProcessOn
     
-### NEWS
+### News
     无
 
 ### History
