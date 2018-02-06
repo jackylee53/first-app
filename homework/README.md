@@ -10,7 +10,7 @@
 
 ### Flowchar
     程序流程图
-![](https://github.com/henryyuan/first-app/tree/master/homework/Module1_homework2_cart.png)
+![](https://github.com/henryyuan/first-app/blob/master/homework/Module1_homework2_cart.png)
 
 ### Install
     在使用前需要先安装。安装后会生成database.json文件。用于缓存数据
