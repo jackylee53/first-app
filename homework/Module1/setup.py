@@ -1,5 +1,5 @@
 import sys
-import Module1_homework2_cart as Cart
+from homework.Module1 import Module1_homework2_cart as Cart
 
 
 def main():

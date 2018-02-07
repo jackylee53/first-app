@@ -1,4 +1,10 @@
 # -*- coding: utf8 -*-
+# 增加内容：
+# 1.添加一个函数，用于在用户登录时间记录与展示
+# 1._login函数中添加首次登录的提示充值
+# 2.good_lists增加商品的采购时间
+# 3._set_shopping_history()记录用户购买的商品的日期
+
 import json
 
 user_dict = {'henry': {'pass': 'henry123'},
