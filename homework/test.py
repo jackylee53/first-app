@@ -1,11 +1,12 @@
-f = open(file='test', mode='r+', encoding='utf-8')
-data = f.read()
-new_data = data.replace('哈哈哈', 'h')
-f.seek(0)
-f.write(new_data)
-#f.write(new_line)
-f.close()
-
-
-
-#print(data)
+def func():
+    prefix = "Good Morning"
+    def func2(name):
+        print(prefix, name)
+    return func2
+f = func()
+f("henry")
+f("tom")
+print(dir(f))
+print(f.__closure__)
+print(type(f.__closure__[0]))
+print(f.__closure__[0].cell_contents)

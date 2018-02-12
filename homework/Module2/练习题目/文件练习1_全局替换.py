@@ -4,7 +4,22 @@ import sys
 import chardet
 
 
-def change_context(old_context, new_context, filename):
-    print()
-    o_f = open(filename, 'r')
-    sys.argv
+def change_context(old_context, new_context, filename='sdfsdf.txt'):
+    with open(filename, 'rb') as f:
+        code = chardet.detect(f.read())['encoding']
+    print('你的文件编码是：%s。我们将以这个编码处理文件。' % code)
+    with open(filename, 'r', encoding=code) as f:
+        for line in f:
+            if old_context in line:
+                new_line = line.replace(old_context, new_context)
+            else:
+                new_line = line
+
+
+
+def main():
+    change_context(old_context='123', new_context='321')
+
+
+if __name__ == '__main__':
+    main()
