@@ -2,22 +2,6 @@
 title = 'id,name,age,phone,dept,enroll_date'
 
 
-def get_title(table):
-    """获取列函数。
-
-    获取数据库文件的抬头部分,读取表文件的第一行。
-    :param table: 表文件参数。
-    :return: 返回一个抬头部分的列表。
-    """
-    try:
-        with open(table, 'r', encoding='utf-8') as rf:
-            data = rf.readline().strip('\n')
-        return data.split(',')
-    except FileNotFoundError as e:
-        print(e)
-        exit(1)
-
-
 def read_db(table):
     """读取表文件函数。
 
@@ -36,5 +20,8 @@ def read_db(table):
 
 
 def write_db(table, data):
+    value2 = ''
+    for i in data:
+        value2 += ','.join(i.values()) + '\n'
     with open(file=table, mode='w', encoding='utf-8') as wf:
-        wf.write(data)
+        wf.write(value2)

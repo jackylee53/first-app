@@ -1,4 +1,6 @@
-#from homework_project.action.actions import actions
+def get_title():
+    title_dict = ['id','name','age','phone','dept','enroll_date']
+    return title_dict
 
 
 def syntax(sql_type):
@@ -6,7 +8,6 @@ def syntax(sql_type):
                    'add': add_syntax,
                    'del': del_syntax,
                    'update': update_syntax,
-                   'help': help_syntax,
                    }
     if sql_type == 'all':
         return syntax_dict
@@ -16,42 +17,32 @@ def syntax(sql_type):
 
 def select_syntax(sql_type):
     select_dict = {'select': [],
-                   'from': [],
+                   'from': '',
                    'where': [],
-                   #'action': actions(sql_type)
                    }
     return select_dict
 
 
 def add_syntax(sql_type):
     add_dict = {'add': False,
-                'from': [],
+                'to': '',
                 'values': [],
-                #'action': actions(sql_type)
                 }
     return add_dict
 
 
 def del_syntax(sql_type):
     del_dict = {'del': False,
-                'from': [],
+                'from': '',
                 'where': [],
-                #'action': actions(sql_type)
                 }
     return del_dict
 
 
 def update_syntax(sql_type):
     update_dict = {'update': [],
-                   'set': [],
+                   'set': '',
                    'where': [],
-                   #'action': actions(sql_type)
                    }
     return update_dict
 
-
-def help_syntax(sql_type):
-    help_dict = {'help': [],
-                 #'action': actions(sql_type)
-                 }
-    return help_dict

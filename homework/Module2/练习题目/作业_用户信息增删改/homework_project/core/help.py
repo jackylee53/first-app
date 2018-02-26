@@ -20,7 +20,7 @@ def select_help():
 
 def add_help():
     strings = '''add语法错误。请查看案例：
-    add from staff_table Alex Li,25,134435344,IT,2015-10-29
+    add to employee_info values Alex Li,25,134435344,IT,2015-10-29
     '''
     return strings
 
