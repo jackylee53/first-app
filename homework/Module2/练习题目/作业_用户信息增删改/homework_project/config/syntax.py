@@ -40,8 +40,8 @@ def del_syntax(sql_type):
 
 
 def update_syntax(sql_type):
-    update_dict = {'update': [],
-                   'set': '',
+    update_dict = {'update': '',
+                   'set': [],
                    'where': [],
                    }
     return update_dict

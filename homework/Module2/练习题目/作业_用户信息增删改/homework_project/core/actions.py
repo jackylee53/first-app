@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from homework_project.action.database import read_db, write_db
 from homework_project.config.syntax import get_title
-import os
+import re
 
 def actions(sql_type, dict_sql):
     #data = read_db(table_file)  # 获取原始数据库文件中的所有数据
@@ -35,37 +35,34 @@ def add_action(dict_sql):
 
 def del_action(dict_sql):
     data = read_db(dict_sql['from'])  # 获取原始数据库文件中的所有数据
-    result = where_action(dict_sql['where'], data)
-    for j in result:
-        data.remove(j)
-    value2 = ''
-    for i in data:
-         value2 += ','.join(i.values()) + '\n'
-    #write_db(table_file, value2)
+    key = dict_sql['where'][0]
+    for values in data:
+        dict_sql['where'][0] = str(values[key])
+        if where_action(dict_sql['where']):
+            print(values)
+            data.remove(values)
+    print(data)
+    #write_db(dict_sql['from'], data)
 
 
 
 def update_action(dict_sql):
     set_list = dict_sql['set']
-    result = where_action(dict_sql['where'])
-    for j in result:
-        if j in data:
-            data[data.index(j)][set_list[0]] = set_list[2]
-    value2 = ''
-    for i in data:
-         value2 += ','.join(i.values()) + '\n'
-    write_db(table_file, value2)
+    # result = where_action(dict_sql['where'])
+    # for j in result:
+    #     if j in data:
+    #         data[data.index(j)][set_list[0]] = set_list[2]
+    # value2 = ''
+    # for i in data:
+    #      value2 += ','.join(i.values()) + '\n'
+    # write_db(table_file, value2)
 
 
-def where_action(where_sql, data):
-    temp_list1 = []
-    print(' '.join(where_sql))
-    for item in data:
-        print(item)
-        print(eval(' '.join(where_sql),item))
-    #     if item[where_sql[0]] == where_sql[2]:
-    #         temp_list1.append(item)
-    # return temp_list1
+def where_action(condition):
+    if 'like' in condition:
+        return re.search(condition[2].strip("'").strip('"'), condition[0]) and True
+    else:
+        return eval(' '.join(condition))
 
 
 

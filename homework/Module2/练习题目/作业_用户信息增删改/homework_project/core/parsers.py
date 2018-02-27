@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from homework_project.config.syntax import syntax
 #from homework_project.action.actions import actions
-import re
+import re, os
 from .check_syntax import where_c_syntax, check_syntax, values_check
 from .help import help
 
@@ -79,8 +79,17 @@ def del_parser(sql_str, sql_type, dir):
         print(help(sql_type))
 
 
-def update_parser():
-    pass
+def update_parser(sql_str, sql_type, dir):
+    dict_sql = syntax(sql_type)
+    command_parse = re.search(r'update\s(.*?)\sset\s(.*?)\swhere\s(.*)', sql_str, re.I)
+    if command_parse:
+        dict_sql['update'] = dir + command_parse.group(1)  # sql字典'to’键添加数据库表文件路径的值
+        dict_sql['set'] = command_parse.group(2).split(',')  # sql字典‘values’键添加插入的值
+        dict_sql['where'] = logic_cal(dict_sql['where'])
+        return dict_sql
+    else:
+        print(help(sql_type))
+
 
 
 def where_parser(condition):
@@ -103,6 +112,11 @@ def logic_cal(logic_exp):
     logic_exp = re.search('(.+?)\s([=<>]{1,2}|like)\s(.+)',''.join(logic_exp)) #表达式列表优化成三个元素，形如[‘age','>=',20] 或 [‘dept','like','HR']
     if(logic_exp):
         logic_exp=list(logic_exp.group(1,2,3))
+        print(logic_exp[2])
         if logic_exp[1] == '=':
-            logic_exp[1] = '=='
+            logic_exp[1] = '==':
+        if not logic_exp[2].isdigit() and not re.search('"(.*?)"',logic_exp[2]): # 判断逻辑运算的比较符号后的值是否字母，并且用户是否输入了双引号。如没有输入手工添加上双引号。
+            print('fuck')
+            logic_exp[2] = '"' + logic_exp[2] + '"'
+    print(logic_exp)
     return logic_exp
