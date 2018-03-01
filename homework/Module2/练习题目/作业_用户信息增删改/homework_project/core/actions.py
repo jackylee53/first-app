@@ -21,10 +21,10 @@ def actions(sql_type):
 
 
 def select_action(dict_sql):
-    temp_list = []
     info = dict_sql['select']
     data = read_db(dict_sql['from'])  # 获取原始数据库文件中的所有数据，data为列表格式
     key = dict_sql['where'][0]  # 获取sql语句中where语句的key值。如id = 1，获取id
+    count = 0
     for values in data:  # 读取data列表中的每一个元素，values是字典格式
         if type(values[key]) is int:
             value = str(values[key])
@@ -32,7 +32,9 @@ def select_action(dict_sql):
             value = '"' + str(values[key]) + '"'
         dict_sql['where'][0] = value  # 将values[key]的值取出并重新赋值为sql语句的key值。
         if where_action(dict_sql['where']):  # 将新的where语句，发送给where_action语句进行bool判断。
+            count += 1
             print_info(info, **values)
+    print('已查找%s条记录' % count)
 
 
 def add_action(dict_sql):
@@ -49,6 +51,7 @@ def add_action(dict_sql):
         print('列数不正确')
     else:
         data.append(dict(zip(get_title(), value)))  # 在获取的原始数据中插入行的数据
+        print('已添加记录')
         write_db(dict_sql['to'], data)  # 写入文件
 
 
@@ -68,6 +71,7 @@ def del_action(dict_sql):
         dict_sql['where'][0] = value  # 将values[key]的值取出并重新赋值为sql语句的key值。
         if where_action(dict_sql['where']):  # 将新的where语句，发送给where_action语句进行bool判断。
             temp_list.append(values)  # 如果符合条件，就从data中移除对应的values
+    print('已删除%s条记录' % len(temp_list))
     for i in temp_list:
         data.remove(i)
     write_db(dict_sql['from'], data)  # 将新生成的data重新写入文件
@@ -82,6 +86,7 @@ def update_action(dict_sql):
     key = dict_sql['where'][0]  # 获取sql语句中where语句的key值。如id = 1，获取id
     set_key = dict_sql['set'][0]  # 获取set语句中用户输入的key
     set_value = dict_sql['set'][2].strip("'").strip('"')  # 获取set语句中用户输入的value
+    count = 0
     for values in data:  # 读取data列表中的每一个元素，values是字典格式
         if type(values[key]) is int:
             value = str(values[key])
@@ -89,7 +94,9 @@ def update_action(dict_sql):
             value = '"' + str(values[key]) + '"'
         dict_sql['where'][0] = value  # 将values[key]的值取出并重新赋值为sql语句的key值。
         if where_action(dict_sql['where']):  # 将新的where语句，发送给where_action语句进行bool判断。
+            count += 1
             values[set_key] = set_value  # 如果符合条件，使用将set_key的值修改为set_value
+    print('已更新%s条记录' % count)
     write_db(dict_sql['update'], data)  # 将新生成的data重新写入文件
 
 
@@ -100,6 +107,8 @@ def where_action(condition):
     :return:
     """
     if 'like' in condition:  # 如果like在语句中
-        return re.search(condition[2].strip("'").strip('"'), condition[0]) and True  # 将where语句中的第二个参数和，第一个参数进行正则比较。如果执行正常就返回True
+        # 将where语句中的第二个参数和，第一个参数进行正则比较。如果执行正常就返回True
+        return re.search(condition[2].strip("'").strip('"'), condition[0]) and True
+
     else:
         return eval(' '.join(condition))  # 除此使用eval进行python的逻辑判断

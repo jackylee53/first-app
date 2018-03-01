@@ -38,9 +38,12 @@ update staff_table set age = 25 where name = Alex Li #把name=Alex Li的纪录�
 
 #### **流程图**
 程序流程图
-![](https://github.com/henryyuan/first-app/blob/master/homework/Module1/Module1_homework2_cart.png)
+![](https://github.com/henryyuan/first-app/tree/master/homework/Module2/练习题目/作业_用户信息增删改/作业_用户信息增删改.png.png)
 
-###
+#### **程序目录结构**
+````text
+
+````
     
 ### Setup
 启动命令。
