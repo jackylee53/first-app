@@ -1,17 +1,15 @@
 # -*- coding: utf-8 -*-
-from homework_project.config.syntax import syntax
-#from homework_project.action.actions import actions
-import re, os
-from .check_syntax import where_c_syntax, check_syntax, values_check
+import re
 from .help import help
 
 
 def parses(sql_type):
     """ 语法解析函数
 
-    :param sql_list: 从main()函数导入的用户输入的sql语句列表。
     :param sql_type: 从main()函数导入的sql语句类型。
     :return:
+        parsers_dict[sql_type]
+        相应的语法解析函数
     """
     parsers_dict = {'select': select_parser,
                     'add': add_parser,
@@ -19,104 +17,120 @@ def parses(sql_type):
                     'update': update_parser}
     if sql_type in parsers_dict:
         return parsers_dict[sql_type]
+    else:
+        return False
 
 
-def select_parser(sql_list, sql_type, dir):
-    """ select语法解析函数
+def select_parser(sql_str, sql_type, base_dir):
+    """ 搜索语句解析函数
 
-    :param sql_list:
-    :param sql_type:
+    :param sql_str: 用户输入的sql语句
+    :param sql_type: 用户输入的sql语句类型
+    :param base_dir: 主函数导入的数据库所在路径
     :return:
     """
-    dict_sql = syntax(sql_type)  # 从config包、syntax模块、syntax函数中导入默认的sql语法。
-    if 'where' not in sql_list:  # 如果用户没有输入where语句。
-        dict_sql.pop('where')
-    else:
-        key = ''
-        for i in sql_list:  # 用户输入的sql与默认的sql语法进行合并。并形成字典格式的sql语句。进行程序内部的传递。
-            if i in dict_sql:
-                key = i
-            else:
-                dict_sql[key].append(i)
-    if [] in dict_sql.values():  # 判断sql字段中的key的值是否有空的列表。如果有就表明，用户没有输入的语法不正确
-        print(help(sql_type))
-    else:
-        print(where_parser(dict_sql['where']))
-        if where_parser(dict_sql['where']) == 1:
-            print(help(sql_type))
-        else:
-            dict_sql['where'] = where_parser(dict_sql['where'])
-            actions(sql_type, dict_sql)
-
-
-def add_parser(sql_str, sql_type, dir):
-    """ add语句解析函数
-
-    :param sql_str:
-    :param sql_type:
-    :param dir:
-    :return:
-    """
-    dict_sql = syntax(sql_type) # 从config包、syntax模块、syntax函数中导入默认的sql字典（用于在程序中传递）。
-    command_parse = re.search(r'add\s*?to\s(.*?)\svalues\s(.*)', sql_str, re.I)  # 使用正则表达式解析add语法，并且re.I忽略大小写
+    dict_sql = {}  # 创建空字典
+    command_parse = re.search(r'select\s(.*?)\sfrom\s(.*?)\swhere\s(.*)', sql_str, re.I)  # 使用正则表达式解析add语法，并且re.I忽略大小写
     if command_parse:
-        dict_sql['to'] = dir + command_parse.group(1)  # sql字典'to’键添加数据库表文件路径的值
+        dict_sql['select'] = command_parse.group(1)
+        dict_sql['from'] = base_dir + command_parse.group(2)  # sql字典'from’键添加数据库表文件路径的值
+        dict_sql['where'] = command_parse.group(3).split(',')  # sql字典‘where’键添加插入的值
+        if logic_cal(dict_sql['where']):  # 使用logic_cal函数将where语句语法再次进行解析
+            dict_sql['where'] = logic_cal(dict_sql['where'])  # 如解析有返回值，将返回值重新作为dict_sql['where']的值
+            return dict_sql
+        else:
+            print(help(sql_type))  # 当语法解析不正常答应帮助
+    else:
+        print(help(sql_type))  # 当语法解析不正常答应帮助
+
+
+def add_parser(sql_str, sql_type, base_dir):
+    """ 添加语句解析函数
+
+    :param sql_str: 用户输入的sql语句
+    :param sql_type: 用户输入的sql语句类型
+    :param base_dir: 主函数导入的数据库所在路径
+    :return:
+        dict_sql
+        解析后的字典格式sql语句
+    """
+    dict_sql = {}
+    command_parse = re.search(r'add\sto\s(.*?)\svalues\s(.*)', sql_str, re.I)  # 使用正则表达式解析add语法，并且re.I忽略大小写
+    if command_parse:
+        dict_sql['to'] = base_dir + command_parse.group(1)  # sql字典'to’键添加数据库表文件路径的值
         dict_sql['values'] = command_parse.group(2).split(',')  # sql字典‘values’键添加插入的值
         return dict_sql
     else:
-        print(help(sql_type))
+        print(help(sql_type))  # 当语法解析不正常答应帮助
 
 
-def del_parser(sql_str, sql_type, dir):
-    dict_sql = syntax(sql_type)
-    command_parse = re.search(r'del\s*?from\s(.*?)\swhere\s(.*)', sql_str, re.I)
+def del_parser(sql_str, sql_type, base_dir):
+    """ 删除语句解析函数
+
+    :param sql_str: 用户输入的sql语句
+    :param sql_type: 用户输入的sql语句类型
+    :param base_dir: 主函数导入的数据库所在路径
+    :return:
+        dict_sql
+        解析后的字典格式sql语句
+    """
+    dict_sql = {}
+    command_parse = re.search(r'del\sfrom\s(.*?)\swhere\s(.*)', sql_str, re.I)
     if command_parse:
-        dict_sql['from'] = dir + command_parse.group(1)  # sql字典'to’键添加数据库表文件路径的值
-        dict_sql['where'] = command_parse.group(2).split(',')  # sql字典‘values’键添加插入的值
-        dict_sql['where'] = logic_cal(dict_sql['where'])
-        return dict_sql
+        dict_sql['from'] = base_dir + command_parse.group(1)  # sql字典'to’键添加数据库表文件路径的值
+        dict_sql['where'] = command_parse.group(2).split(',')  # sql字典‘where’键添加插入的值
+        if logic_cal(dict_sql['where']):  # 使用logic_cal函数将where语句语法再次进行解析
+            dict_sql['where'] = logic_cal(dict_sql['where'])  # 如解析有返回值，将返回值重新作为dict_sql['where']的值
+            return dict_sql
+        else:
+            print(help(sql_type))  # 当语法解析不正常答应帮助
     else:
-        print(help(sql_type))
+        print(help(sql_type))  # 当语法解析不正常答应帮助
 
 
-def update_parser(sql_str, sql_type, dir):
-    dict_sql = syntax(sql_type)
-    command_parse = re.search(r'update\s(.*?)\sset\s(.*?)\swhere\s(.*)', sql_str, re.I)
+def update_parser(sql_str, sql_type, base_dir):
+    """ 更新语句解析函数
+
+    :param sql_str: 用户输入的sql语句
+    :param sql_type: 用户输入的sql语句类型
+    :param base_dir: 主函数导入的数据库所在路径
+    :return:
+        dict_sql
+        解析后的字典格式sql语句
+    """
+    dict_sql = {}
+    command_parse = re.search(r'update\s(.*?)\sset\s(.*?)=(.*?)\swhere\s(.*)', sql_str, re.I)
     if command_parse:
-        dict_sql['update'] = dir + command_parse.group(1)  # sql字典'to’键添加数据库表文件路径的值
-        dict_sql['set'] = command_parse.group(2).split(',')  # sql字典‘values’键添加插入的值
-        dict_sql['where'] = logic_cal(dict_sql['where'])
-        return dict_sql
+        dict_sql['update'] = base_dir + command_parse.group(1)  # sql字典'to’键添加数据库表文件路径的值
+        dict_sql['set'] = [command_parse.group(2), '=', command_parse.group(3)]  # sql字典‘where’键添加插入的值
+        dict_sql['where'] = command_parse.group(4).split(',')
+        if logic_cal(dict_sql['where']) and logic_cal(dict_sql['set']):  # 如果where语句、set语句都符合logic_cal中定义的规范
+            dict_sql['where'] = logic_cal(dict_sql['where'])  # 如解析有返回值，将返回值重新作为dict_sql['where']的值
+            dict_sql['set'] = logic_cal(dict_sql['set'])  # 如解析有返回值，将返回值重新作为dict_sql['set']的值
+            return dict_sql
+        else:
+            print(help(sql_type))  # 当语法解析不正常答应帮助
     else:
-        print(help(sql_type))
+        print(help(sql_type))  # 当语法解析不正常答应帮助
 
 
-
-def where_parser(condition):
-    key = ['<', '>', '=', 'like']
-    # if len(where_list) < 3:  # 如果where语句不输入空格，dict_sql['where']值的列表的值的数量会小于3。直接提示帮助。
-    #     return 1
-    # elif where_list[1] not in key:
-    #     return 1
-    # elif len(where_list) > 3:  # 当where语句列表大于3时，可以判断这个
-    #     if where_list[1] in key:
-    #         key,item = ' '.join(where_list).split(where_list[1])
-    #         where_list = [key.strip().strip('"'),where_list[1],item.strip().strip('"')]
-    #         return where_list
-    # else:
-    #     temp_list = []
-    #     for i in where_list:
-    #         temp_list.append(i.strip('"'))
-    #     return temp_list
 def logic_cal(logic_exp):
-    logic_exp = re.search('(.+?)\s([=<>]{1,2}|like)\s(.+)',''.join(logic_exp)) #表达式列表优化成三个元素，形如[‘age','>=',20] 或 [‘dept','like','HR']
-    if(logic_exp):
-        logic_exp=list(logic_exp.group(1,2,3))
-        print(logic_exp[2])
+    """ 逻辑函数
+
+    :param logic_exp: sql语句中和逻辑判断相关的语句，列表格式。如[‘age','>=',20] 或 [‘dept','like','HR']
+    :return:
+        logic_exp
+        经过语法解析后的逻辑判断语句。列表格式。如[‘age','==',20] 或 [‘dept','like','HR']
+    """
+    # 表达式列表优化成三个元素，形如[‘age','>=',20] 或 [‘dept','like','HR']
+    logic_exp = re.search('(.+?)\s([=<>]{1,2}|like)\s(.+)', ''.join(logic_exp))
+    if logic_exp:
+        logic_exp = list(logic_exp. group(1, 2, 3))  # 取得re匹配的所有值，并作为一个列表
         if logic_exp[1] == '=':
-            logic_exp[1] = '==':
-        if not logic_exp[2].isdigit() and not re.search('"(.*?)"',logic_exp[2]): # 判断逻辑运算的比较符号后的值是否字母，并且用户是否输入了双引号。如没有输入手工添加上双引号。
-            print('fuck')
+            logic_exp[1] = '=='
+        # 判断逻辑运算的比较符号后的值是否字母，并且用户是否输入了双引号。如没有输入手工添加上双引号。
+        if not logic_exp[2].isdigit() and not re.search('"(.*?)"', logic_exp[2]):
             logic_exp[2] = '"' + logic_exp[2] + '"'
-    print(logic_exp)
-    return logic_exp
+        return logic_exp
+    else:
+        return False

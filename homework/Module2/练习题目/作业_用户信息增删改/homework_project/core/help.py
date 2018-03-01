@@ -12,7 +12,7 @@ def help(sql_type):
 def select_help():
     strings = '''select语法错误。请查看案例：
     select name,age from staff_table where age > 22
-    select * from staff_table where dept="IT"
+    select * from staff_table where dept = "IT"
     select * from staff_table where enroll_date like "2013"
     '''
     return strings
@@ -20,14 +20,14 @@ def select_help():
 
 def add_help():
     strings = '''add语法错误。请查看案例：
-    add to employee_info values Alex Li,25,134435344,IT,2015-10-29
+    add to staff_table values Alex Li,25,134435344,IT,2015-10-29
     '''
     return strings
 
 
 def del_help():
     strings = '''del语法错误。请查看案例：
-    del from staff_table where id=3
+    del from staff_table where id = 3
     '''
     return strings
 
@@ -35,7 +35,7 @@ def del_help():
 def update_help():
     strings = '''update语法错误。请查看案例：
     UPDATE staff_table SET dept="Market" WHERE  dept = "IT"
-    UPDATE staff_table SET age=25 WHERE  name ="Alex Li"
+    UPDATE staff_table SET age=25 WHERE  name = "Alex Li"
     '''
     return strings
 
