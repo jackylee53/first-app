@@ -4,7 +4,7 @@ from .actions import actions
 import os
 
 
-def main():
+def run():
     """ 主函数
         获取用户输入，并对用户进行解析。如果获取解析值，并执行相应的sql操作。
     """

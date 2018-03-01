@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from homework_project.config.syntax import get_title
+from config.syntax import get_title
 
 def read_db(table):
     """ 读取表文件函数。

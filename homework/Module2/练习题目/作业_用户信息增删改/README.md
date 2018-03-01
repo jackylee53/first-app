@@ -59,7 +59,7 @@ homework_project
 │   └── staff_table  # 表
 ├── __init__.py
 __init__.py 
-mysql_run.py  # 主程序
+mysql_run.py  # 执行程序
 ````
     
 ### Setup

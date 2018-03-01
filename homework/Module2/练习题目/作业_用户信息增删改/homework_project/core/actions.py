@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from homework_project.action.database import read_db, write_db, print_info
-from homework_project.config.syntax import get_title
+from action.database import read_db, write_db, print_info
+from config.syntax import get_title
 import re
 
 
