@@ -16,7 +16,7 @@ def run():
             if p.parses(sql_type):  # 检查sql的类型是否符合规则
                 dict_sql = p.parses(sql_type)(sql_str, sql_type, database_dir)  # 调用parsers模块的parses函数进行语法解析
                 if dict_sql:  # 如果字典格式的sql语句返回
-                    actions(sql_type)(dict_sql)  # 则执行后面的sql操作
+                    print(actions(sql_type)(dict_sql))  # 则执行后面的sql操作
             else:
                 print('sql语法错误，程序支持select，del，add，update语句。')
         else:

@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 import re
-from .help import help
+#from .help import help
 
 
-def parses(sql_type):
+def parsers(sql_str, sql_type, base_dir):
     """ 语法解析函数
 
     :param sql_type: 从main()函数导入的sql语句类型。
@@ -16,7 +16,7 @@ def parses(sql_type):
                     'del': del_parser,
                     'update': update_parser}
     if sql_type in parsers_dict:
-        return parsers_dict[sql_type]
+        return parsers_dict[sql_type](sql_str, sql_type, base_dir)
     else:
         return False
 
