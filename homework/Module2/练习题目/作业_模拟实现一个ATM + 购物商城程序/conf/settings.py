@@ -8,7 +8,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TITLE = ['id','name','age','phone','dept','enroll_date','expire_date','account','password','credit','balance','status','pay_day']
 
 DATABASE = {
-    'engine': 'file_storage', #support mysql,postgresql in the future
+    'engine': 'file_storage',  # support mysql, postgresql in the future
     'name':'accounts',
     'path': "%s/db/" % BASE_DIR
 }

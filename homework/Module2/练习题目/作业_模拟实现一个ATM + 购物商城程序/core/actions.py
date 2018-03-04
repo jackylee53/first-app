@@ -39,7 +39,6 @@ def select_action(dict_sql):
             count += 1
             temp_list.append(values)
     return temp_list
-    #print('已查找%s条记录' % count)
 
 
 def add_action(dict_sql):

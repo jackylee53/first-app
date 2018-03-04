@@ -34,7 +34,7 @@ def write_db(table, data):
     :param table: 表文件参数
     :param data: 导入的数据。为字典格式
     """
-    value2 = ','.join(set.TITLE) + '\n'
+    value2 = ','.join(settings.TITLE) + '\n'
     for values in data:
         temp_list = []
         for value in values.values():

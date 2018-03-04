@@ -10,14 +10,14 @@ import json
 import time
 
 
-
 def login_required(func):
     "验证用户是否登录"
 
-    def wrapper(*args,**kwargs):
-        #print('--wrapper--->',args,kwargs)
+    def wrapper(*args, **kwargs):
+        print(args, kwargs)
+        # print('--wrapper--->',args,kwargs)
         if args[0].get('is_authenticated'):
-            return func(*args,**kwargs)
+            return func(*args, **kwargs)
         else:
             exit("User is not authenticated.")
     return wrapper
@@ -47,20 +47,9 @@ def acc_auth(account,password):
             return res[0]
     else:
         print("\033[31;1mAccount ID and password is incorrect!\033[0m")
-    # db_api = db_handler.db_handler()
-    # data = db_api("select * from accounts where account=%s" % account)
-    #
-    #
-    # if data['password'] == password:
-    #     exp_time_stamp = time.mktime(time.strptime(data['expire_date'], "%Y-%m-%d"))
-    #     if time.time() > exp_time_stamp:
-    #         print("\033[31;1mAccount [%s] has expired,please contact the back to get a new card!\033[0m" % account)
-    #     else:  # passed the authentication
-    #         return data
-    # else:
-    #     print("\033[31;1mAccount ID or password is incorrect!\033[0m")
 
-def acc_login(user_data,log_obj):
+
+def acc_login(user_data, log_obj):
     '''
     account login func
     :user_data: user info data , only saves in memory
@@ -71,7 +60,8 @@ def acc_login(user_data,log_obj):
         account = input("\033[32;1maccount:\033[0m").strip()
         password = input("\033[32;1mpassword:\033[0m").strip()
         auth = acc_auth(account, password)
-        if auth: #not None means passed the authentication
+        if auth:  # not None means passed the authentication
+            log_obj.info("account [%s] login system" % account)
             user_data['is_authenticated'] = True
             user_data['account_id'] = account
             return auth
@@ -79,3 +69,10 @@ def acc_login(user_data,log_obj):
     else:
         log_obj.error("account [%s] too many login attempts" % account)
         exit()
+
+
+def acc_logout(user_data, log_obj):
+    account = user_data['account_data']['name']
+    user_data['is_authenticated'] = False
+    log_obj.info("account [%s] logout system" % account)
+    exit("account [%s] logout system" % account)

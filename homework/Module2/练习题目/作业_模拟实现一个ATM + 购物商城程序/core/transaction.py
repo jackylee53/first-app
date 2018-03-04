@@ -4,11 +4,12 @@
 from conf import settings
 from core import accounts
 from core import logger
+from core import parsers
+from core import actions
 #transaction logger
 
 
-
-def make_transaction(log_obj,account_data,tran_type,amount,**others):
+def make_transaction(log_obj, account_data, tran_type, amount, **others):
     '''
     deal all the user transactions
     :param account_data: user account data
@@ -18,9 +19,10 @@ def make_transaction(log_obj,account_data,tran_type,amount,**others):
     :return:
     '''
     amount = float(amount)
-    if tran_type in  settings.TRANSACTION_TYPE:
 
-        interest =  amount * settings.TRANSACTION_TYPE[tran_type]['interest']
+    if tran_type in settings.TRANSACTION_TYPE:
+
+        interest = amount * settings.TRANSACTION_TYPE[tran_type]['interest']
         old_balance = account_data['balance']
         if settings.TRANSACTION_TYPE[tran_type]['action'] == 'plus':
             new_balance = old_balance + amount + interest
@@ -32,9 +34,17 @@ def make_transaction(log_obj,account_data,tran_type,amount,**others):
                 [%s]''' %(account_data['credit'],(amount + interest), old_balance ))
                 return
         account_data['balance'] = new_balance
-        accounts.dump_account(account_data) #save the new balance back to file
-        log_obj.info("account:%s   action:%s    amount:%s   interest:%s" %
+        base_dir = settings.DATABASE['path']
+        sql_str = 'update accounts_table set balance = %s where name = %s' % (new_balance, account_data['account'])
+        sql_type = sql_str.split()[0]
+        print(sql_str)
+        dict_sql = parsers.parsers(sql_str, sql_type, base_dir)
+        print(dict_sql)
+        res = actions.actions(sql_type, dict_sql)
+        if res:
+        # accounts.dump_account(account_data)  # save the new balance back to file
+            log_obj.info("account:%s   action:%s    amount:%s   interest:%s" %
                           (account_data['id'], tran_type, amount,interest) )
-        return account_data
+            return account_data
     else:
         print("\033[31;1mTransaction type [%s] is not exist!\033[0m" % tran_type)

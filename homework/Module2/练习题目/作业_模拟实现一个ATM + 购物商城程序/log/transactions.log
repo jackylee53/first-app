@@ -1,0 +1,3 @@
+2018-03-03 17:19:35,038 - transaction - INFO - account:2   action:repay    amount:3.0   interest:0.0
+2018-03-03 22:25:18,190 - transaction - INFO - account:2   action:repay    amount:12345.0   interest:0.0
+2018-03-03 22:31:34,891 - transaction - INFO - account:2   action:repay    amount:1231231.0   interest:0.0
