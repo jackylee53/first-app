@@ -49,14 +49,14 @@ log
 
 ````
     
-### Setup
+#### 启动命令
 启动命令。
 ```text
 python atm.py
 python manage.py
 ```
 
-### Credits
+#### 发布信息
     - 作者：henryyuan
     - 日期：2018/03/05
     - 版本：Version 1.0
@@ -65,8 +65,29 @@ python manage.py
     - MarkDown工具：pycharm
     - 流程图工具：ProcessOn
     
-### News
+#### 新闻
     无
 
-### History
+#### 历史记录
     2018-3-5 Version：1.0
+    
+#### 遇到的问题：
+```text
+1.) 在main.py接口中的add_account()函数。用于添加账号。需要输入多个input条件。代码如下：
+```
+```python
+account_name = input("\033[33;1mInput user name:\033[0m").strip()
+if len(account_name) > 0:
+    account_name = account_name
+else:
+    continue
+account_age = input("\033[33;1mInput user age:\033[0m").strip()
+if len(account_name) > 0 and account_age.isdigit():
+    account_age = account_age
+else:
+    continue
+account_phone = input("\033[33;1mInput user phone number:\033[0m").strip()
+```
+```text
+每个input语句都需要有if的判断。如何减少代码量。
+```
