@@ -17,8 +17,8 @@
 注意：以上需求，要充分使用函数，请尽你的最大限度来减少重复代码！
 
 #### **流程图**
-程序流程图
-![](https://github.com/henryyuan/first-app/tree/master/homework/Module2/练习题目/作业_用户信息增删改/作业_用户信息增删改.png.png)
+程序流程图（待补全）
+![]()
 
 #### **程序目录结构**
 ````text
@@ -87,7 +87,11 @@ if len(account_name) > 0 and account_age.isdigit():
 else:
     continue
 account_phone = input("\033[33;1mInput user phone number:\033[0m").strip()
+if len(account_phone) > 0 and account_phone.isdigit() and len(account_phone) == 11:
+    account_phone = account_phone
+else:
+    continue
 ```
 ```text
-每个input语句都需要有if的判断。如何减少代码量。
+每个input语句都需要有if的判断，但当有多个input输入语句时，就会出现过多的重复的if代码。如何减少if语句的代码量。
 ```
