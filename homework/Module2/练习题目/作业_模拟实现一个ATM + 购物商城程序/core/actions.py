@@ -55,7 +55,7 @@ def add_action(dict_sql):
         print('列数不正确')
     else:
         data.append(dict(zip(settings.TITLE, value)))  # 在获取的原始数据中插入行的数据
-    return data
+        database.write_db(dict_sql['to'], data)
 
 
 def del_action(dict_sql):
@@ -100,6 +100,7 @@ def update_action(dict_sql):
         if where_action(dict_sql['where']):  # 将新的where语句，发送给where_action语句进行bool判断。
             count += 1
             values[set_key] = set_value  # 如果符合条件，使用将set_key的值修改为set_value
+    print(data)
     print('已更新%s条记录' % count)
     database.write_db(dict_sql['update'], data)  # 将新生成的data重新写入文件
 

@@ -1,7 +1,7 @@
 ## README
 #### **功能描述**
 作业需求：
-
+```text
 1、额度 15000或自定义
 2、实现购物商城，买东西加入购物车，调用信用卡接口结账
 3、可以提现，手续费5%
@@ -12,8 +12,9 @@
 8、ATM记录操作日志
 9、提供管理接口，包括添加账户、用户额度，冻结账户等。。。
 10、用户认证用装饰器
-示例代码https://github.com/triaquae/py3_training/tree/master/atm
-简易流程图：https://www.processon.com/view/link/589eb841e4b0999184934329注意：以上需求，要充分使用函数，请尽你的最大限度来减少重复代码！
+```
+
+注意：以上需求，要充分使用函数，请尽你的最大限度来减少重复代码！
 
 #### **流程图**
 程序流程图
@@ -21,35 +22,43 @@
 
 #### **程序目录结构**
 ````text
-homework_project
-├── action
-│   ├── database.py  # 对数据库中的表文件进行操作
-│   ├── __init__.py
-├── config
-│   ├── __init__.py
-│   └── syntax.py  # 配置文件。
-├── core
-│   ├── actions.py  # 对不同的sql类型进行对应的操作
-│   ├── help.py  # 提供帮助
-│   ├── __init__.py
-│   ├── main.py  # 主函数，提供用户输入界面。并执行语法解析与sql操作
-│   ├── parsers.py  # 语法解析函数。对用户输入的语法正确性镜像解析，并最终解析成字典格式
-├── database
-│   └── staff_table  # 表
+bin
+├── atm.py  # atm入口
 ├── __init__.py
-__init__.py 
-mysql_run.py  # 执行程序
+└── manage.py  # 管理入口
+conf
+├── __init__.py
+└── settings.py  # 配置文件
+core
+├── accounts.py  # 账号添加、修改额度、禁用、启动接口
+├── actions.py   # sql动作接口
+├── auth.py      # 用户认证接口
+├── database.py  # 数据库操作接口
+├── db_handler.py# 无用到
+├── __init__.py
+├── logger.py    # 日志接口
+├── main.py      # 主接口
+├── parsers.py   # sql语法解析接口
+└── transaction.py # 交易接口
+db
+├── accounts_table  # 用户账号表
+└── managers_table  # 管理员账号表
+log
+├── access.log      #访问日志
+└── transactions.log #交易日志
+
 ````
     
 ### Setup
 启动命令。
 ```text
-python mysql_run.py
+python atm.py
+python manage.py
 ```
 
 ### Credits
     - 作者：henryyuan
-    - 日期：2018/03/01
+    - 日期：2018/03/05
     - 版本：Version 1.0
     - 工具：PyCharm 2017.3.3
     - 版本：Python 3.6.4
@@ -60,4 +69,4 @@ python mysql_run.py
     无
 
 ### History
-    2018-3-1 Version：1.0
+    2018-3-5 Version：1.0

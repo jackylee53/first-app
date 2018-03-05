@@ -1,0 +1,2 @@
+id,name,age,phone,dept,enroll_date,expire_date,account,password,credit,balance,status,pay_day
+1,admin,,,admin,2013-04-01,2053-04-01,admin,admin,,,0,

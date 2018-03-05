@@ -1,41 +1,36 @@
 #!_*_coding:utf-8_*_
-#__author__:"Alex Li"
-
 import json
 import time
-from core import db_handler
+from core import database
 from conf import settings
+from core import parsers
+from core import actions
 
 
-def load_current_balance(account_id):
-    '''
-    return account balance and other basic info
-    :param account_id:
-    :return:
-    '''
-    # db_path = db_handler.db_handler(settings.DATABASE)
-    # account_file = "%s/%s.json" %(db_path,account_id)
-    #
-    db_api = db_handler.db_handler()
-    data = db_api("select * from accounts where account=%s" % account_id)
+def load_accounts(account):
+    base_dir = settings.DATABASE['path']
+    sql_str = 'select * from accounts_table where account = %s' % account
+    sql_type = sql_str.split()[0]
+    dict_sql = parsers.parsers(sql_str, sql_type, base_dir)
+    res = actions.actions(sql_type, dict_sql)
+    if not res:
+        return False
+    else:
+        return True
 
-    return data
 
-    # with open(account_file) as f:
-    #     acc_data = json.load(f)
-    #     return  acc_data
-def dump_account(account_data):
-    '''
-    after updated transaction or account data , dump it back to file db
-    :param account_data:
-    :return:
-    '''
-    db_api = db_handler.db_handler()
-    data = db_api("update accounts where account=%s" % account_data['id'],account_data=account_data)
+def change_account(account, set_str):
+    base_dir = settings.DATABASE['path']
+    sql_str = 'update accounts_table set %s where account = %s' % (set_str, account)
+    sql_type = sql_str.split()[0]
+    dict_sql = parsers.parsers(sql_str, sql_type, base_dir)
+    actions.actions(sql_type, dict_sql)
 
-    # db_path = db_handler.db_handler(settings.DATABASE)
-    # account_file = "%s/%s.json" %(db_path,account_data['id'])
-    # with open(account_file, 'w') as f:
-    #     acc_data = json.dump(account_data,f)
 
-    return True
+def add_account(*args, **kwargs):
+    #print(args)
+    base_dir = settings.DATABASE['path']
+    sql_str = 'add to accounts_table values %s' % (','.join(args))
+    sql_type = sql_str.split()[0]
+    dict_sql = parsers.parsers(sql_str, sql_type, base_dir)
+    actions.actions(sql_type, dict_sql)

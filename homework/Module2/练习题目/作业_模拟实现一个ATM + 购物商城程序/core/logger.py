@@ -1,12 +1,11 @@
 #!_*_coding:utf-8_*_
-
 """
 handle all the logging works
 """
 
 import logging
 from conf import settings
-
+import json
 
 def logger(log_type):
 

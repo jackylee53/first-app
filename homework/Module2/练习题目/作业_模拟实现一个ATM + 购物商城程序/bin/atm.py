@@ -1,5 +1,4 @@
 #!_*_coding:utf-8_*_
-#__author__:"Alex Li"
 
 import os
 import sys
@@ -10,4 +9,4 @@ sys.path.append(base_dir)
 from core import main
 
 if __name__ == '__main__':
-    main.run()
+    main.run('atm')

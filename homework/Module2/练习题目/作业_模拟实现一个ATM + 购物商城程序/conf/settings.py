@@ -27,3 +27,8 @@ TRANSACTION_TYPE = {
     'consume':{'action':'minus', 'interest':0},
 
 }
+
+ACCOUNT_DEFAULT = {
+    'credit': 15000.0
+
+}
