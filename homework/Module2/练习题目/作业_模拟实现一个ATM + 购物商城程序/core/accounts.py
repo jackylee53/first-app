@@ -8,6 +8,11 @@ from core import actions
 
 
 def load_accounts(account):
+    """ Check account whether exists in a database
+
+    :param account:
+    :return:
+    """
     base_dir = settings.DATABASE['path']
     sql_str = 'select * from accounts_table where account = %s' % account
     sql_type = sql_str.split()[0]
@@ -20,6 +25,12 @@ def load_accounts(account):
 
 
 def change_account(account, set_str):
+    """ Change account data
+
+    :param account:
+    :param set_str:
+    :return:
+    """
     base_dir = settings.DATABASE['path']
     sql_str = 'update accounts_table set %s where account = %s' % (set_str, account)
     sql_type = sql_str.split()[0]
@@ -27,8 +38,13 @@ def change_account(account, set_str):
     actions.actions(sql_type, dict_sql)
 
 
-def add_account(*args, **kwargs):
-    #print(args)
+def add_account(*args):
+    """ Add an new account
+
+    :param args:
+    :param kwargs:
+    :return:
+    """
     base_dir = settings.DATABASE['path']
     sql_str = 'add to accounts_table values %s' % (','.join(args))
     sql_type = sql_str.split()[0]

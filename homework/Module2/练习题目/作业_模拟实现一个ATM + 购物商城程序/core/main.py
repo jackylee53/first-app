@@ -14,6 +14,8 @@ from conf import settings
 from core import accounts
 import random
 import datetime
+import re
+import time
 
 # transaction logger
 trans_logger = logger.logger('transaction')
@@ -110,6 +112,11 @@ def withdraw(acc_data):
 
 @login_required
 def transfer(acc_data):
+    """ transfer accounts
+
+    :param acc_data:
+    :return:
+    """
     account_data = acc_data['account_data']
     current_balance = ''' --------- BALANCE INFO --------
         Credit :    %s
@@ -147,13 +154,24 @@ def transfer(acc_data):
 
 @login_required
 def pay_check(acc_data):
+    """ Account pay check interface
+
+    :param acc_data:
+    :return:
+    """
     back_flag = False
     account_id = acc_data['account_id']
-    log_file = "%s/log/%s" % (settings.BASE_DIR, settings.LOG_TYPES['transaction'])
-    with open(log_file, 'r') as f:
-        for i in f:
-            if 'account:%s' % account_id in i:
-                print(i)
+    local_month = time.localtime().tm_mon
+    res = logger.get_log_info(account_id)
+
+    if res:
+        for result in res:
+            if result[0].tm_mon == local_month:
+                pay_check_info = ''' --------- Datatime %s --------
+                Action:       %s
+                Amount:       %s
+                Interest:     %s''' % (time.strftime('%Y-%m-%d %H:%M:%S',result[0]), result[1], result[2], result[3])
+                print(pay_check_info)
     while not back_flag:
         input_b = input("\033[33;1mInput 'b' return to menu:\033[0m").strip()
         if input_b == 'b':
@@ -347,12 +365,12 @@ def run(type):
     :return:
     """
     if type == 'atm':
-        acc_data = auth.acc_login(user_data, access_logger, 'accounts_table')
+        acc_data = auth.acc_login(user_data, access_logger, 'atm')
         if user_data['is_authenticated']:
             user_data['account_data'] = acc_data
             interactive(user_data)
     elif type == 'manage':
-        acc_data = auth.acc_login(user_data, access_logger, 'managers_table')
+        acc_data = auth.acc_login(user_data, access_logger, 'manage')
         if user_data['is_authenticated']:
             user_data['account_data'] = acc_data
             mg_interactive(user_data)

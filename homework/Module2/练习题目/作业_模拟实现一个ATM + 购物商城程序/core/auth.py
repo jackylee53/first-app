@@ -22,7 +22,7 @@ def login_required(func):
     return wrapper
 
 
-def acc_auth(account, password, table):
+def acc_auth(account, password, type):
     '''
     优化版认证接口
     :param account: credit account number
@@ -30,7 +30,14 @@ def acc_auth(account, password, table):
     :return: if passed the authentication , retun the account object, otherwise ,return None
 
     '''
-    base_dir = settings.DATABASE['path']
+    # table = None
+    # base_dir = None
+    if type == 'atm':
+        base_dir = settings.DATABASE['path']
+        table = settings.DATABASE['name']
+    elif type == 'manage':
+        base_dir = settings.MANAGE_DATABASE['path']
+        table = settings.MANAGE_DATABASE['name']
     sql_str = 'select * from %s where account = %s' % (table, account)
     sql_type = sql_str.split()[0]
     dict_sql = parsers.parsers(sql_str, sql_type, base_dir)
@@ -52,7 +59,7 @@ def acc_auth(account, password, table):
         print("\033[31;1mAccount ID and password is incorrect!\033[0m")
 
 
-def acc_login(user_data, log_obj, table):
+def acc_login(user_data, log_obj, type):
     '''
     account login func
     :user_data: user info data , only saves in memory
@@ -62,7 +69,7 @@ def acc_login(user_data, log_obj, table):
     while user_data['is_authenticated'] is not True and retry_count < 3 :
         account = input("\033[32;1maccount:\033[0m").strip()
         password = input("\033[32;1mpassword:\033[0m").strip()
-        auth = acc_auth(account, password, table)
+        auth = acc_auth(account, password, type)
         if auth:  # not None means passed the authentication
             log_obj.info("account [%s] login system" % account)
             user_data['is_authenticated'] = True
