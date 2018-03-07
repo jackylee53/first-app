@@ -11,3 +11,5 @@ def double(matched):
 s = 'A23G4HFD567'
 test = re.match('(?P<value>\d+)',s)
 print(test.end(0))
+
+if 1234 == 0
