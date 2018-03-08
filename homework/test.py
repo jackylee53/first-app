@@ -1,15 +1,25 @@
-import re
+class China:
+    company = 'BAIDU'
+    def __init__(self,card, balance, amount):
+        self.card = card
+        self.balance = balance
+        self.amount = amount
 
 
-# 将匹配的数字乘于 2
-def double(matched):
-    print(matched)
-    value = int(matched.group('value'))
-    return str(value * 2)
+    def transaction(self, another):
+        another.balance -= self.amount
+
+class American:
+    company = 'IBM'
+    def __init__(self, card, balance, amount):
+        self.card = card
+        self.balance = balance
+        self.amount = amount
+
+    def transaction(self, another):
+        another.balance -= self.amount
 
 
-s = 'A23G4HFD567'
-test = re.match('(?P<value>\d+)',s)
-print(test.end(0))
+baidu = China('123456', 23, 10)
+ibm = American('654321', 23, 10)
 
-if 1234 == 0
